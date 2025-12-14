@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ljudets Bioregulatoriska Natur - Infografik</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Plotly.js -->
+    <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Palette: Neuro-Cyber -->
+    <!-- Primary: #4F46E5 (Indigo) -->
+    <!-- Secondary: #06B6D4 (Cyan) -->
+    <!-- Accent: #D946EF (Fuchsia) -->
+    <!-- Background: #F8FAFC (Slate 50) -->
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        neuro: {
+                            primary: '#4F46E5',
+                            secondary: '#06B6D4',
+                            accent: '#D946EF',
+                            dark: '#1E293B',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Chart Container Styling per Requirements */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px; /* Base height */
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+        
+        /* Custom Scrollbar for a "Tech" feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4F46E5; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4338ca; 
+        }
+    </style>
+    
+    <!-- 
+    NARRATIVE PLAN:
+    1. Header: Introduce Sound as Biological Technology.
+    2. Context: The Evolutionary Mismatch (Safe vs Threat).
+    3. Study Method: RCT Breakdown (N=15, 3 Conditions).
+    4. Visual Context: Waveform visualization (Plotly) - Harmonic vs Chaotic.
+    5. Results 1 (Cognitive): Chart.js Bar Chart (Silence vs Stress).
+    6. Results 2 (Recovery): Chart.js Bar Chart (Therapeutic vs Control).
+    7. Conclusion: Sonic Recovery Zones.
+    
+    CHART SELECTIONS (NO SVG):
+    1. Cognitive Efficiency: Bar Chart (Compare). Best for comparing CES scores.
+    2. Stress Delta: Horizontal Bar Chart (Compare). Best for showing magnitude of recovery.
+    3. Soundwaves: Plotly Line Chart (Canvas). Visual aid for frequency concepts.
+    
+    CONFIRMATION:
+    - NO SVG used.
+    - NO Mermaid JS used.
+    - All charts use Canvas.
+    -->
+</head>
+<body class="bg-neuro-light text-neuro-dark font-sans antialiased selection:bg-neuro-secondary selection:text-white">
+
+    <!-- Header Section -->
+    <header class="bg-neuro-primary text-white shadow-lg relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-neuro-primary to-neuro-accent opacity-90"></div>
+        <div class="container mx-auto px-6 py-16 relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-black mb-4 uppercase tracking-tight">Ljudets Bioregulatoriska Natur</h1>
+            <p class="text-xl md:text-2xl font-light opacity-90 max-w-3xl mx-auto">Från estetiskt medium till biologisk teknologi</p>
+            <div class="mt-8 inline-block bg-white text-neuro-primary px-6 py-2 rounded-full font-bold shadow-md">
+                Examensarbete: Live-ljudteknik & Neurofysiologi
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="container mx-auto px-4 py-12 space-y-16">
+
+        <!-- Section 1: Introduction & The Problem -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <div class="border-l-4 border-neuro-accent pl-6">
+                    <h2 class="text-3xl font-bold text-neuro-dark">Det Evolutionära Imperativet</h2>
+                    <p class="text-lg text-gray-600 mt-2">Vi slutar aldrig lyssna.</p>
+                </div>
+                <p class="text-gray-700 leading-relaxed">
+                    Hörseln är vårt primära "tidiga varningssystem". Till skillnad från ögonen kan öronen inte stängas. Vårt auditiva system är direkt kopplat till hjärnans upphetsningscentra (RAS och Amygdala), ständigt redo att kategorisera ljud som <strong>"SÄKER"</strong> eller <strong>"HOT"</strong>.
+                </p>
+                
+                <div class="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                    <h3 class="font-bold text-xl mb-4 text-neuro-primary">Den Moderna Missmatchningen</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-green-50 p-4 rounded-lg border border-green-200">
+                            <h4 class="font-bold text-green-700 mb-2">Biofila Ljud (Natur)</h4>
+                            <ul class="text-sm text-green-800 space-y-1">
+                                <li>• Lågfrekvent dominans</li>
+                                <li>• Rytmisk förutsägbarhet</li>
+                                <li>• Tolkas som: <strong>Säkerhet</strong></li>
+                            </ul>
+                        </div>
+                        <div class="bg-red-50 p-4 rounded-lg border border-red-200">
+                            <h4 class="font-bold text-red-700 mb-2">Toxiska Ljudlandskap (Industri)</h4>
+                            <ul class="text-sm text-red-800 space-y-1">
+                                <li>• Högfrekvent energi (>2kHz)</li>
+                                <li>• Kaotisk spektraldensitet</li>
+                                <li>• Tolkas som: <strong>Nödläge</strong></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Plotly Visualization: Waveform Comparison -->
+            <div class="bg-white rounded-xl shadow-lg p-6 flex flex-col items-center">
+                <h3 class="text-xl font-bold mb-2 text-neuro-dark text-center">Visuell Analys: Harmonisk vs Kaotisk</h3>
+                <p class="text-sm text-gray-500 mb-4 text-center">Simulering av biofila vs stressinducerande vågformer</p>
+                <!-- Plotly Container -->
+                <div id="wavePlot" class="w-full h-80 bg-gray-50 rounded-lg"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Methodology -->
+        <section class="bg-white rounded-2xl shadow-xl p-8 md:p-12 overflow-hidden relative">
+            <div class="absolute top-0 left-0 w-2 h-full bg-neuro-secondary"></div>
+            <h2 class="text-3xl font-bold mb-6 text-neuro-dark">Metodik: NeuroSonic Focus Studien</h2>
+            <p class="text-gray-600 mb-8 max-w-4xl">
+                För att undersöka ljud som en manipulerbar biologisk variabel genomfördes en randomiserad kontrollerad studie (RCT) med en specialutvecklad Web Audio API-plattform. Syftet var att testa om precisionssyntetiserat ljud (528 Hz) kunde påverka återhämtning och kognition.
+            </p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Condition A -->
+                <div class="bg-gray-50 rounded-xl p-6 border-t-4 border-gray-400 hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">🔇</div>
+                    <h3 class="text-xl font-bold mb-2">A. Tystnad</h3>
+                    <p class="text-sm font-bold text-gray-500 uppercase tracking-wide mb-2">Kontroll</p>
+                    <p class="text-gray-600 text-sm">Neutral baslinje för att mäta kognitiv genomströmning utan auditiv input.</p>
+                </div>
+
+                <!-- Condition B -->
+                <div class="bg-indigo-50 rounded-xl p-6 border-t-4 border-neuro-primary hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">🧬</div>
+                    <h3 class="text-xl font-bold mb-2">B. Terapeutisk</h3>
+                    <p class="text-sm font-bold text-neuro-primary uppercase tracking-wide mb-2">Intervention</p>
+                    <p class="text-gray-600 text-sm">528 Hz bärfrekvens + 4 Hz binaural takt. Designad för fysiologisk återhämtning.</p>
+                </div>
+
+                <!-- Condition C -->
+                <div class="bg-pink-50 rounded-xl p-6 border-t-4 border-neuro-accent hover:shadow-md transition-shadow">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-xl font-bold mb-2">C. Stress</h3>
+                    <p class="text-sm font-bold text-neuro-accent uppercase tracking-wide mb-2">Provokation</p>
+                    <p class="text-gray-600 text-sm">Rosa brus + intermittenta 2000 Hz sågtandsutbrott. Simulerar toxisk miljö.</p>
+                </div>
+            </div>
+            
+            <div class="mt-8 p-4 bg-blue-50 rounded-lg flex flex-col md:flex-row justify-between items-center text-sm text-blue-800">
+                <span class="font-bold">Instrument:</span>
+                <span>NeuroSonic Focus (Web Audio API)</span>
+                <span class="hidden md:inline">|</span>
+                <span class="font-bold">Deltagare:</span>
+                <span>N = 15</span>
+                <span class="hidden md:inline">|</span>
+                <span class="font-bold">Mätvärden:</span>
+                <span>CES (Hastighet/Noggrannhet) & Stressdelta (Δ)</span>
+            </div>
+        </section>
+
+        <!-- Section 3: Results (Charts) -->
+        <section>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-black text-neuro-dark mb-4">Analys & Resultat</h2>
+                <p class="text-xl text-gray-600">Hur påverkar ljud vår hjärna och kropp?</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                
+                <!-- Chart 1: Cognitive Impact -->
+                <div class="flex flex-col">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-neuro-dark mb-2">Kognitiv Påverkan</h3>
+                        <p class="text-gray-600">
+                            Resultaten bekräftar den "förföriska detaljeffekten" av kaotiskt ljud. Medan tystnad tillät maximalt fokus, orsakade stresstillståndet en dramatisk försämring av arbetsminnets prestanda.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg flex-grow flex items-center justify-center border border-gray-100">
+                        <div class="chart-container">
+                            <canvas id="cesChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-center text-gray-500 italic">
+                        *CES (Cognitive Efficiency Score) mäter balans mellan hastighet och noggrannhet.
+                    </div>
+                </div>
+
+                <!-- Chart 2: Physiological Recovery -->
+                <div class="flex flex-col">
+                    <div class="mb-6">
+                        <h3 class="text-2xl font-bold text-neuro-dark mb-2">Fysiologisk Återhämtning</h3>
+                        <p class="text-gray-600">
+                            Studien identifierade en signifikant skillnad i återhämtning. Det terapeutiska ljudet (528 Hz) genererade en djupare avslappningseffekt jämfört med enbart tystnad efter kognitiv ansträngning.
+                        </p>
+                    </div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg flex-grow flex items-center justify-center border border-gray-100">
+                        <div class="chart-container">
+                            <canvas id="stressChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="mt-4 text-sm text-center text-gray-500 italic">
+                        *Stressdelta (Δ) indikerar minskning av subjektiv stress. Högre värde = Bättre återhämtning.
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Section 4: Conclusion & Future Paradigm -->
+        <section class="bg-neuro-dark text-white rounded-2xl shadow-2xl p-8 md:p-16 text-center relative overflow-hidden">
+            <!-- Decorative circle -->
+            <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-neuro-primary rounded-full opacity-20 blur-3xl"></div>
+            <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-neuro-accent rounded-full opacity-20 blur-3xl"></div>
+
+            <div class="relative z-10 max-w-4xl mx-auto">
+                <h2 class="text-3xl md:text-5xl font-black mb-8">Ett Nytt Paradigm</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12 text-left">
+                    <div class="bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20">
+                        <h3 class="text-xl font-bold text-neuro-secondary mb-2">Gammalt Synsätt</h3>
+                        <p class="text-gray-300">Fokus på "Ljudstyrka" och tekniska mätvärden (SPL, Frekvens). Musik ses som underhållning.</p>
+                    </div>
+                    <div class="bg-gradient-to-br from-neuro-primary to-neuro-accent p-6 rounded-lg shadow-lg border border-white/20">
+                        <h3 class="text-xl font-bold text-white mb-2">Nytt Synsätt</h3>
+                        <p class="text-white">Fokus på <strong>"Metabolisk Kostnad"</strong>. Ljud hanteras som en biologisk input. Implementering av "Sonic Recovery Zones" för besättningen.</p>
+                    </div>
+                </div>
+                
+                <p class="text-xl md:text-2xl font-light mb-8">
+                    "Även om 528 Hz inte förbättrade hastigheten i realtid, är dess roll i <strong>återhämtning</strong> kritisk för att motverka utbrändhet."
+                </p>
+
+                <div class="inline-block border border-white/30 px-8 py-3 rounded-full text-sm font-mono tracking-widest uppercase hover:bg-white hover:text-neuro-dark transition-colors cursor-default">
+                    Examensarbete 2025
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-12 border-t border-gray-200">
+        <div class="container mx-auto px-6 text-center text-gray-500 text-sm">
+            <p class="mb-2">Baserat på examensarbetet: <strong>Ljudets Bioregulatoriska Natur</strong></p>
+            <p>Kurs: YH02394 Liveljudtekniker | Institution: Scenkonstskola</p>
+            <p class="mt-4 opacity-50">Genererad med Canvas Data Visualization</p>
+        </div>
+    </footer>
+
+    <!-- Scripts for Visualizations -->
+    <script>
+        // --- UTILITY: LABEL WRAPPING ---
+        // Splits long labels into arrays of strings for Chart.js multiline support
+        function formatLabel(str, maxwidth) {
+            const sections = [];
+            const words = str.split(" ");
+            let temp = "";
+
+            words.forEach(function(item, index) {
+                if (temp.length > 0) {
+                    const concat = temp + ' ' + item;
+                    if (concat.length > maxwidth) {
+                        sections.push(temp);
+                        temp = "";
+                    } else {
+                        if (index === (words.length - 1)) {
+                            sections.push(concat);
+                            return;
+                        } else {
+                            temp = concat;
+                            return;
+                        }
+                    }
+                }
+                if (index === (words.length - 1)) {
+                    sections.push(item);
+                    return;
+                }
+                if (item.length < maxwidth) {
+                    temp = item;
+                } else {
+                    sections.push(item);
+                }
+            });
+            return sections;
+        }
+
+        // --- CHART 1: Cognitive Efficiency Score (CES) ---
+        // Comparison: Silence vs Stress
+        const ctxCES = document.getElementById('cesChart').getContext('2d');
+        const cesLabelsRaw = ["Tystnad (Kontroll)", "Stress (Brus + Sågtand)"];
+        const cesLabels = cesLabelsRaw.map(l => formatLabel(l, 16));
+
+        new Chart(ctxCES, {
+            type: 'bar',
+            data: {
+                labels: cesLabels,
+                datasets: [{
+                    label: 'Kognitiv Effektivitetspoäng (CES)',
+                    data: [2.19, 1.09], // Data from results
+                    backgroundColor: [
+                        'rgba(6, 182, 212, 0.8)', // Cyan (Calm)
+                        'rgba(217, 70, 239, 0.8)'  // Fuchsia (Stress)
+                    ],
+                    borderColor: [
+                        'rgba(6, 182, 212, 1)',
+                        'rgba(217, 70, 239, 1)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 8
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                const label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'CES Poäng (Högre är bättre)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 2: Stress Recovery Delta ---
+        // Comparison: Therapeutic vs Control
+        const ctxStress = document.getElementById('stressChart').getContext('2d');
+        const stressLabelsRaw = ["Terapeutisk (528Hz)", "Kontroll (Tystnad)"];
+        const stressLabels = stressLabelsRaw.map(l => formatLabel(l, 16));
+
+        new Chart(ctxStress, {
+            type: 'bar',
+            indexAxis: 'y', // Horizontal Bar Chart
+            data: {
+                labels: stressLabels,
+                datasets: [{
+                    label: 'Stressdelta (Δ)',
+                    data: [3.2, 0.4], // Data from results
+                    backgroundColor: [
+                        'rgba(79, 70, 229, 0.8)', // Indigo (Therapeutic)
+                        'rgba(148, 163, 184, 0.8)' // Slate (Control)
+                    ],
+                    borderColor: [
+                        'rgba(79, 70, 229, 1)',
+                        'rgba(148, 163, 184, 1)'
+                    ],
+                    borderWidth: 2,
+                    borderRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                const item = tooltipItems[0];
+                                const label = item.chart.data.labels[item.dataIndex];
+                                if (Array.isArray(label)) {
+                                    return label.join(' ');
+                                } else {
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Återhämtningsnivå (Δ)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // --- CHART 3: Plotly Waveform Simulation ---
+        // Visual Context: Showing the difference between "Harmonic" and "Chaotic"
+        
+        // Generate Harmonic Data (Sine Wave)
+        const xValues = [];
+        const yHarmonic = [];
+        const yChaotic = [];
+        
+        for (let x = 0; x <= 10; x += 0.1) {
+            xValues.push(x);
+            // Smooth sine wave representing 528Hz/Biofilic
+            yHarmonic.push(Math.sin(x) * 2);
+            // Jagged random data representing Stress/Noise
+            yChaotic.push((Math.random() * 2 - 1) + Math.sin(x*3) * 0.5); 
+        }
+
+        const trace1 = {
+            x: xValues,
+            y: yHarmonic,
+            mode: 'lines',
+            name: 'Biofilisk/Harmonisk',
+            line: {
+                color: '#06B6D4', // Cyan
+                width: 4,
+                shape: 'spline'
+            },
+            type: 'scatter'
+        };
+
+        const trace2 = {
+            x: xValues,
+            y: yChaotic,
+            mode: 'lines',
+            name: 'Toxisk/Stress',
+            line: {
+                color: '#D946EF', // Pink
+                width: 2,
+                dash: 'dot' // Representing the "sawtooth/burst" nature
+            },
+            type: 'scatter'
+        };
+
+        const layout = {
+            showlegend: true,
+            legend: { orientation: "h", y: 1.1 },
+            margin: { t: 20, r: 20, b: 30, l: 30 },
+            xaxis: { showgrid: false, showticklabels: false },
+            yaxis: { showgrid: true, showticklabels: false },
+            paper_bgcolor: 'rgba(0,0,0,0)',
+            plot_bgcolor: 'rgba(0,0,0,0)',
+            font: { family: 'Roboto' }
+        };
+
+        const config = {
+            responsive: true,
+            displayModeBar: false // Clean look
+        };
+
+        Plotly.newPlot('wavePlot', [trace1, trace2], layout, config);
+
+    </script>
+</body>
+</html>
